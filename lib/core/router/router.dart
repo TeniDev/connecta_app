@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../data/providers/providers.dart';
+import '../../pages/pages.dart';
 import '../constants/constants.dart';
 
 part './router_handlers.dart';
@@ -25,6 +27,14 @@ class _RouterConfig {
       GoRoute(
         path: RoutesNames.homeRoute,
         builder: _homeHandler,
+        redirect: (context, state) {
+          final container = ProviderContainer();
+          if (container.read(authProvider).currentUser == null) {
+            return RoutesNames.loginRoute;
+          } else {
+            return null;
+          }
+        },
       ),
       GoRoute(
         path: RoutesNames.loginRoute,
