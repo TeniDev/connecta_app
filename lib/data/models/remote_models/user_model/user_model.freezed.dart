@@ -20,8 +20,12 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get birthday => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +38,12 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({int id, String name});
+  $Res call(
+      {String id,
+      String name,
+      String lastName,
+      String email,
+      @TimestampConverter() DateTime? birthday});
 }
 
 /// @nodoc
@@ -52,16 +61,31 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? lastName = null,
+    Object? email = null,
+    Object? birthday = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthday: freezed == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -73,7 +97,12 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       __$$_UserModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name});
+  $Res call(
+      {String id,
+      String name,
+      String lastName,
+      String email,
+      @TimestampConverter() DateTime? birthday});
 }
 
 /// @nodoc
@@ -89,16 +118,31 @@ class __$$_UserModelCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? lastName = null,
+    Object? email = null,
+    Object? birthday = freezed,
   }) {
     return _then(_$_UserModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthday: freezed == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -106,19 +150,31 @@ class __$$_UserModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserModel implements _UserModel {
-  const _$_UserModel({required this.id, required this.name});
+  const _$_UserModel(
+      {required this.id,
+      required this.name,
+      required this.lastName,
+      required this.email,
+      @TimestampConverter() this.birthday});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserModelFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String name;
+  @override
+  final String lastName;
+  @override
+  final String email;
+  @override
+  @TimestampConverter()
+  final DateTime? birthday;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name)';
+    return 'UserModel(id: $id, name: $name, lastName: $lastName, email: $email, birthday: $birthday)';
   }
 
   @override
@@ -127,12 +183,18 @@ class _$_UserModel implements _UserModel {
         (other.runtimeType == runtimeType &&
             other is _$_UserModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.birthday, birthday) ||
+                other.birthday == birthday));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, lastName, email, birthday);
 
   @JsonKey(ignore: true)
   @override
@@ -150,15 +212,26 @@ class _$_UserModel implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {required final int id, required final String name}) = _$_UserModel;
+      {required final String id,
+      required final String name,
+      required final String lastName,
+      required final String email,
+      @TimestampConverter() final DateTime? birthday}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   String get name;
+  @override
+  String get lastName;
+  @override
+  String get email;
+  @override
+  @TimestampConverter()
+  DateTime? get birthday;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

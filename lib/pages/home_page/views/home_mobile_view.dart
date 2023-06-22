@@ -1,96 +1,205 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connecta_app/pages/home_page/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../core/constants/constants.dart';
 import '../../../core/utils/utils.dart';
+import '../../../core/widgets/widgets.dart';
 import '../../../data/providers/providers.dart';
-import '../../../services/services.dart';
+import '../providers/home_providers.dart';
 
 class HomeMobileView extends ConsumerWidget {
   const HomeMobileView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          Text(
-            'Welcome ${ref.watch(authProvider).currentUser!.displayName}',
-            style: AppStyles.medium,
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            'Your birthday is: ',
-            style: AppStyles.medium,
-          ),
-          const SizedBox(height: 20),
-          FutureBuilder(
-            future: ref.read(databaseServiceProvider).getDocument(
-                  documentId: ref.read(authProvider).currentUser!.uid,
-                  collection: AppConstants.userCollection,
+    final user = ref.watch(userSessionProvider);
+    final state = ref.watch(homePageProvider);
+    final notifier = ref.read(homePageProvider.notifier);
+
+    return user != null
+        ? Stack(
+            alignment: AlignmentDirectional.topCenter,
+            children: [
+              Container(
+                color: AppColors.black,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 150),
+                    Expanded(
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: notifier.getUserAddressStream(),
+                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return const Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'No se ha podido cargar tus direcciones',
+                                    style: AppStyles.medium,
+                                  ),
+                                  Text(
+                                    'Vuélvelo a intentar más tarde',
+                                    style: AppStyles.small,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return const Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(
+                                    color: AppColors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+
+                          return const SizedBox();
+                        },
+                      ),
+                    ),
+                    /* Expanded(
+                      child: ListView.builder(
+                        itemCount: 50,
+                        itemBuilder: (context, index) {
+                          return const AddressCard();
+                        },
+                      ),
+                    ), */
+                  ],
                 ),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Text(
-                  '${(snapshot.data!['birthday'] as Timestamp).toDate().toLocal()}',
-                  style: AppStyles.medium,
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-          ),
-          const SizedBox(height: 20),
-          InkWell(
-            onTap: () async {
-              await ref.read(authServiceProvider).signOut();
-              if (context.mounted) context.pushReplacement(RoutesNames.loginRoute);
-            },
-            child: const Text(
-              'Sign Out',
-              style: AppStyles.buttons,
-            ),
-          ),
-        ],
-      ),
-    );
-    /* return SizedBox(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FutureBuilder(
-              future: ref.read(databaseServiceProvider).getDocument(
-                    documentId: ref.read(authProvider).currentUser!.uid,
-                    collection: AppConstants.userCollection,
-                  ),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return Text(
-                    '${(snapshot.data!['birthday'] as Timestamp).toDate().toLocal()}',
-                    style: AppStyles.medium,
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            ),
-            InkWell(
-              onTap: () async {
-                await ref.read(authServiceProvider).signOut();
-                if (context.mounted) context.pushReplacement(RoutesNames.loginRoute);
-              },
-              child: const Text(
-                'Sign Out',
-                style: AppStyles.buttons,
               ),
-            ),
-          ],
-        ),
-      ),
-    ); */
+              Container(
+                height: 150,
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                decoration: const BoxDecoration(
+                  color: AppColors.black,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Hola, ${user.name}',
+                              style: AppStyles.medium,
+                            ),
+                            Text(
+                              user.email,
+                              style: AppStyles.small.copyWith(fontSize: 10),
+                            ),
+                          ],
+                        ),
+                        InkWell(
+                          onTap: () => notifier.logout(context),
+                          child: Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                              color: AppColors.blue,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(
+                              Icons.settings,
+                              size: 20,
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    CustomInput(
+                      onChange: (value) {},
+                      validator: (value) {},
+                      hint: 'Buscar...',
+                      prefixIcon: Icons.search_outlined,
+                      onTapSuffixIcon: () {},
+                      suffixIconShow: true,
+                      sufixIcon: Icons.close,
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                right: 20,
+                child: FloatingButton(
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          )
+        : notifier.isLogged
+            ? FutureBuilder(
+                future: notifier.getLoggedUser(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data == false) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'No se ha podido cargar tu información',
+                              style: AppStyles.medium,
+                            ),
+                            const Text(
+                              'Vuélvelo a intentar más tarde',
+                              style: AppStyles.small,
+                            ),
+                            const SizedBox(
+                              height: 48,
+                            ),
+                            CustomButton(
+                              onPressed: () => notifier.logout(context),
+                              label: 'Cerrar sesión',
+                              isLoading: state.isLoadingSignOut,
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  }
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(
+                          color: AppColors.white,
+                          strokeWidth: 2,
+                        ),
+                        SizedBox(
+                          height: 24,
+                        ),
+                        Text(
+                          'Cargando tu información',
+                          style: AppStyles.medium,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              )
+            : const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.white,
+                  strokeWidth: 2,
+                ),
+              );
   }
 }

@@ -1,10 +1,20 @@
 import 'package:riverpod/riverpod.dart';
 
-final userSessionProvider = NotifierProvider<_SessionProvider, String?>(() => _SessionProvider());
+import '../models/models.dart';
 
-class _SessionProvider extends Notifier<String?> {
+final userSessionProvider = NotifierProvider<_SessionProvider, UserModel?>(() => _SessionProvider());
+
+class _SessionProvider extends Notifier<UserModel?> {
   @override
-  String? build() {
+  UserModel? build() {
     return null;
+  }
+
+  void setUser(UserModel user) {
+    state = user;
+  }
+
+  void removeUser() {
+    state = null;
   }
 }

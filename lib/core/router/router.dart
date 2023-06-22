@@ -28,8 +28,7 @@ class _RouterConfig {
         path: RoutesNames.homeRoute,
         builder: _homeHandler,
         redirect: (context, state) {
-          final container = ProviderContainer();
-          if (container.read(authProvider).currentUser == null) {
+          if (ProviderContainer().read(authProvider).currentUser == null) {
             return RoutesNames.loginRoute;
           } else {
             return null;

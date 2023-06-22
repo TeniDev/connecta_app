@@ -51,4 +51,8 @@ class DatabaseService implements DatabaseRepository {
     // TODO: implement updateDocument
     throw UnimplementedError();
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getCollectionStream({required String collection}) {
+    return ref.read(databaseProvider).collection(collection).snapshots();
+  }
 }
