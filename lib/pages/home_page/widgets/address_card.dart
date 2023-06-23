@@ -26,24 +26,12 @@ class AddressCard extends ConsumerWidget {
         children: [
           Row(
             children: [
-              InkWell(
-                onTap: () {},
-                child: const SizedBox(
-                  height: 35,
-                  width: 35,
-                  child: Icon(
-                    Icons.star_border_outlined,
-                    size: 20,
-                    color: AppColors.white,
-                  ),
-                ),
-              ),
               const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 180,
+                    width: 200,
                     child: Text(
                       address.address,
                       style: AppStyles.small,

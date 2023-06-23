@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,20 +23,26 @@ class EditAddressMobileView extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () => notifier.pop(context),
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: AppColors.white,
+            FadeInLeft(
+              from: 30,
+              child: InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () => notifier.pop(context),
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColors.white,
+                ),
               ),
             ),
             const SizedBox(height: 24),
-            const Center(
-              child: Text(
-                'Editar dirección',
-                style: AppStyles.title,
+            FadeInDown(
+              from: 30,
+              child: const Center(
+                child: Text(
+                  'Editar dirección',
+                  style: AppStyles.title,
+                ),
               ),
             ),
             const SizedBox(height: 48),
@@ -76,24 +83,30 @@ class EditAddressMobileView extends ConsumerWidget {
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 48),
-            Center(
-              child: SizedBox(
-                child: CustomButton(
-                  onPressed: () => notifier.editAddress(context),
-                  label: 'Editar dirección',
-                  isLarge: true,
-                  isLoading: model.isLoadingForm,
+            FadeInUp(
+              from: 30,
+              child: Center(
+                child: SizedBox(
+                  child: CustomButton(
+                    onPressed: () => notifier.editAddress(context),
+                    label: 'Editar dirección',
+                    isLarge: true,
+                    isLoading: model.isLoadingForm,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 24),
-            Center(
-              child: SizedBox(
-                child: CustomButton(
-                  onPressed: () => notifier.pop(context),
-                  label: 'Cancelar',
-                  isLarge: true,
-                  bgColor: AppColors.red,
+            FadeInUp(
+              from: 30,
+              child: Center(
+                child: SizedBox(
+                  child: CustomButton(
+                    onPressed: () => notifier.pop(context),
+                    label: 'Cancelar',
+                    isLarge: true,
+                    bgColor: AppColors.red,
+                  ),
                 ),
               ),
             ),

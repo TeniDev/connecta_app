@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,20 +22,26 @@ class CreateAddressMobileView extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () => notifier.pop(context),
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: AppColors.white,
+            FadeInLeft(
+              from: 30,
+              child: InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () => notifier.pop(context),
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColors.white,
+                ),
               ),
             ),
             const SizedBox(height: 24),
-            const Center(
-              child: Text(
-                'Crear dirección',
-                style: AppStyles.title,
+            FadeInDown(
+              from: 30,
+              child: const Center(
+                child: Text(
+                  'Crear dirección',
+                  style: AppStyles.title,
+                ),
               ),
             ),
             const SizedBox(height: 48),
@@ -71,12 +78,15 @@ class CreateAddressMobileView extends ConsumerWidget {
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 48),
-            Center(
-              child: CustomButton(
-                onPressed: () => notifier.createAddress(context),
-                label: 'Crear dirección',
-                isLarge: true,
-                isLoading: model.isLoadingForm,
+            FadeInUp(
+              from: 30,
+              child: Center(
+                child: CustomButton(
+                  onPressed: () => notifier.createAddress(context),
+                  label: 'Crear dirección',
+                  isLarge: true,
+                  isLoading: model.isLoadingForm,
+                ),
               ),
             ),
           ],

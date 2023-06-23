@@ -74,7 +74,7 @@ class CustomInput extends StatelessWidget {
     Function? onTapSuffixIcon,
     IconData? sufixIcon,
     IconData? prefixIcon,
-    bool? suffixIconShow = false,
+    bool suffixIconShow = false,
   }) {
     return InputDecoration(
       contentPadding: const EdgeInsets.all(0),
@@ -98,22 +98,24 @@ class CustomInput extends StatelessWidget {
       hintStyle: style,
       errorStyle: const TextStyle(color: Colors.white),
       suffixIcon: sufixIcon != null
-          ? InkWell(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  height: 20,
-                  child: Icon(
-                    sufixIcon,
-                    color: AppColors.white,
-                    size: 18,
+          ? suffixIconShow
+              ? InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      height: 20,
+                      child: Icon(
+                        sufixIcon,
+                        color: AppColors.white,
+                        size: 18,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              onTap: () {
-                onTapSuffixIcon!();
-              },
-            )
+                  onTap: () {
+                    onTapSuffixIcon!();
+                  },
+                )
+              : null
           : null,
       prefixIcon: prefixIcon != null
           ? Padding(

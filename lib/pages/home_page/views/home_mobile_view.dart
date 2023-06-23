@@ -155,7 +155,7 @@ class HomeMobileView extends ConsumerWidget {
                       hint: 'Buscar...',
                       prefixIcon: Icons.search_outlined,
                       onTapSuffixIcon: () => notifier.clearSearch(),
-                      suffixIconShow: true,
+                      suffixIconShow: notifier.searchController.text.isNotEmpty,
                       sufixIcon: Icons.close,
                     ),
                   ],
