@@ -43,6 +43,10 @@ class _RouterConfig {
         path: RoutesNames.registerRoute,
         builder: _registerHandler,
       ),
+      GoRoute(
+        path: RoutesNames.createAddressRoute,
+        builder: _createAddressRouteHandler,
+      ),
     ],
   );
 }

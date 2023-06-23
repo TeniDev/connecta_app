@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connecta_app/pages/home_page/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/widgets.dart';
+import '../../../data/models/models.dart';
 import '../../../data/providers/providers.dart';
 import '../providers/home_providers.dart';
 
@@ -27,9 +27,9 @@ class HomeMobileView extends ConsumerWidget {
                   children: [
                     const SizedBox(height: 150),
                     Expanded(
-                      child: StreamBuilder<QuerySnapshot>(
+                      child: StreamBuilder<List<AddressModel>>(
                         stream: notifier.getUserAddressStream(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        builder: (BuildContext context, AsyncSnapshot<List<AddressModel>> snapshot) {
                           if (snapshot.hasError) {
                             return const Center(
                               child: Column(
@@ -62,18 +62,34 @@ class HomeMobileView extends ConsumerWidget {
                             );
                           }
 
-                          return const SizedBox();
+                          if (snapshot.data!.isEmpty) {
+                            return const Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'No tienes direcciones registradas',
+                                    style: AppStyles.medium,
+                                  ),
+                                  Text(
+                                    'Agrega una nueva dirección',
+                                    style: AppStyles.small,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+
+                          return ListView(
+                            children: snapshot.data!.map((AddressModel address) {
+                              return AddressCard(
+                                address: address,
+                              );
+                            }).toList(),
+                          );
                         },
                       ),
                     ),
-                    /* Expanded(
-                      child: ListView.builder(
-                        itemCount: 50,
-                        itemBuilder: (context, index) {
-                          return const AddressCard();
-                        },
-                      ),
-                    ), */
                   ],
                 ),
               ),
@@ -139,7 +155,7 @@ class HomeMobileView extends ConsumerWidget {
                 bottom: 20,
                 right: 20,
                 child: FloatingButton(
-                  onPressed: () {},
+                  onPressed: () => notifier.goToCreateAddress(context),
                 ),
               ),
             ],

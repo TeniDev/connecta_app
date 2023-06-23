@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'views/home_views.dart';
+import 'views/create_address_views.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class CreateAddressPage extends StatelessWidget {
+  const CreateAddressPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
                   ),
                 );
               } else {
-                return const HomeMobileView();
+                return const CreateAddressMobileView();
               }
             },
           ),

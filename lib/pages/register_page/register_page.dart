@@ -16,14 +16,12 @@ class RegisterPage extends StatelessWidget {
           child: LayoutBuilder(
             builder: (context, constraints) {
               if (constraints.maxWidth >= 1280) {
-                //TODO: Desktop View
                 return const SizedBox(
                   child: Center(
                     child: Text('Proximamente'),
                   ),
                 );
               } else if (constraints.maxWidth >= 650) {
-                //TODO: Tablet View
                 return const SizedBox(
                   child: Center(
                     child: Text('Proximamente'),

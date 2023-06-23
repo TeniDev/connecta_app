@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -65,10 +64,11 @@ class HomePageEvents extends StateNotifier<HomePageModel> {
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getUserAddressStream() {
-    return ref.read(databaseServiceProvider).getCollectionStream(
-          collection:
-              '${AppConstants.userCollection}/${ref.read(authServiceProvider).getCurrentUser()}/${AppConstants.addressCollection}',
-        );
+  Stream<List<AddressModel>> getUserAddressStream() {
+    return ref.read(addressService).getAllAddress(userId: ref.read(authProvider).currentUser!.uid);
+  }
+
+  void goToCreateAddress(BuildContext context) {
+    context.push(RoutesNames.createAddressRoute);
   }
 }

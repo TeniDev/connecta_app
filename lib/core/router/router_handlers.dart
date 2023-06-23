@@ -11,3 +11,7 @@ Widget _registerHandler(BuildContext context, GoRouterState state) {
 Widget _homeHandler(BuildContext context, GoRouterState state) {
   return const HomePage();
 }
+
+Widget _createAddressRouteHandler(BuildContext context, GoRouterState state) {
+  return const CreateAddressPage();
+}

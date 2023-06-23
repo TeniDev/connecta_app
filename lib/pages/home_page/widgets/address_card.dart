@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/utils.dart';
+import '../../../data/models/models.dart';
 
 class AddressCard extends StatelessWidget {
-  const AddressCard({Key? key}) : super(key: key);
+  const AddressCard({Key? key, required this.address}) : super(key: key);
+
+  final AddressModel address;
 
   @override
   Widget build(BuildContext context) {
@@ -37,19 +40,36 @@ class AddressCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Nombre de la empresa',
-                    style: AppStyles.medium.copyWith(fontSize: 12),
+                  SizedBox(
+                    width: 180,
+                    child: Text(
+                      address.address,
+                      style: AppStyles.small,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                  Text(
-                    'Nombre del contacto',
-                    style: AppStyles.small.copyWith(fontSize: 10),
+                  SizedBox(
+                    width: 150,
+                    child: Text(
+                      address.complement,
+                      style: AppStyles.small.copyWith(fontSize: 10),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: 150,
+                    child: Text(
+                      '${address.city} - ${address.identifierName}',
+                      style: AppStyles.small.copyWith(fontSize: 10),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
             ],
           ),
-          Row(
+          Column(
             children: [
               InkWell(
                 onTap: () {},
@@ -67,7 +87,7 @@ class AddressCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(height: 10),
               InkWell(
                 onTap: () {},
                 child: Container(
