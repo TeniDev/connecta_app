@@ -21,6 +21,7 @@ HomePageModel _$HomePageModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$HomePageModel {
   bool get isLoadingSignOut => throw _privateConstructorUsedError;
+  bool get isSearching => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $HomePageModelCopyWith<$Res> {
           HomePageModel value, $Res Function(HomePageModel) then) =
       _$HomePageModelCopyWithImpl<$Res, HomePageModel>;
   @useResult
-  $Res call({bool isLoadingSignOut});
+  $Res call({bool isLoadingSignOut, bool isSearching});
 }
 
 /// @nodoc
@@ -51,11 +52,16 @@ class _$HomePageModelCopyWithImpl<$Res, $Val extends HomePageModel>
   @override
   $Res call({
     Object? isLoadingSignOut = null,
+    Object? isSearching = null,
   }) {
     return _then(_value.copyWith(
       isLoadingSignOut: null == isLoadingSignOut
           ? _value.isLoadingSignOut
           : isLoadingSignOut // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSearching: null == isSearching
+          ? _value.isSearching
+          : isSearching // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -69,7 +75,7 @@ abstract class _$$_HomePageModelCopyWith<$Res>
       __$$_HomePageModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoadingSignOut});
+  $Res call({bool isLoadingSignOut, bool isSearching});
 }
 
 /// @nodoc
@@ -84,11 +90,16 @@ class __$$_HomePageModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoadingSignOut = null,
+    Object? isSearching = null,
   }) {
     return _then(_$_HomePageModel(
       isLoadingSignOut: null == isLoadingSignOut
           ? _value.isLoadingSignOut
           : isLoadingSignOut // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSearching: null == isSearching
+          ? _value.isSearching
+          : isSearching // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -97,17 +108,20 @@ class __$$_HomePageModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_HomePageModel implements _HomePageModel {
-  const _$_HomePageModel({required this.isLoadingSignOut});
+  const _$_HomePageModel(
+      {required this.isLoadingSignOut, required this.isSearching});
 
   factory _$_HomePageModel.fromJson(Map<String, dynamic> json) =>
       _$$_HomePageModelFromJson(json);
 
   @override
   final bool isLoadingSignOut;
+  @override
+  final bool isSearching;
 
   @override
   String toString() {
-    return 'HomePageModel(isLoadingSignOut: $isLoadingSignOut)';
+    return 'HomePageModel(isLoadingSignOut: $isLoadingSignOut, isSearching: $isSearching)';
   }
 
   @override
@@ -116,12 +130,14 @@ class _$_HomePageModel implements _HomePageModel {
         (other.runtimeType == runtimeType &&
             other is _$_HomePageModel &&
             (identical(other.isLoadingSignOut, isLoadingSignOut) ||
-                other.isLoadingSignOut == isLoadingSignOut));
+                other.isLoadingSignOut == isLoadingSignOut) &&
+            (identical(other.isSearching, isSearching) ||
+                other.isSearching == isSearching));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, isLoadingSignOut);
+  int get hashCode => Object.hash(runtimeType, isLoadingSignOut, isSearching);
 
   @JsonKey(ignore: true)
   @override
@@ -138,14 +154,17 @@ class _$_HomePageModel implements _HomePageModel {
 }
 
 abstract class _HomePageModel implements HomePageModel {
-  const factory _HomePageModel({required final bool isLoadingSignOut}) =
-      _$_HomePageModel;
+  const factory _HomePageModel(
+      {required final bool isLoadingSignOut,
+      required final bool isSearching}) = _$_HomePageModel;
 
   factory _HomePageModel.fromJson(Map<String, dynamic> json) =
       _$_HomePageModel.fromJson;
 
   @override
   bool get isLoadingSignOut;
+  @override
+  bool get isSearching;
   @override
   @JsonKey(ignore: true)
   _$$_HomePageModelCopyWith<_$_HomePageModel> get copyWith =>

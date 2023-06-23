@@ -19,6 +19,7 @@ final homePageProvider = StateNotifierProvider<HomePageEvents, HomePageModel>((r
 class HomePageModel with _$HomePageModel {
   const factory HomePageModel({
     required bool isLoadingSignOut,
+    required bool isSearching,
   }) = _HomePageModel;
 
   factory HomePageModel.fromJson(Map<String, dynamic> json) => _$HomePageModelFromJson(json);
@@ -28,9 +29,11 @@ class HomePageEvents extends StateNotifier<HomePageModel> {
   HomePageEvents(this.ref)
       : super(const HomePageModel(
           isLoadingSignOut: false,
+          isSearching: false,
         ));
 
   final Ref ref;
+  final searchController = TextEditingController();
 
   Future<bool> getLoggedUser() async {
     try {
@@ -69,6 +72,13 @@ class HomePageEvents extends StateNotifier<HomePageModel> {
     return ref.read(addressService).getAllAddress(userId: ref.read(authProvider).currentUser!.uid);
   }
 
+  Stream<List<AddressModel>> searchUserAddressStream() {
+    return ref.read(addressService).getSearchAddress(
+          userId: ref.read(authProvider).currentUser!.uid,
+          searchText: searchController.text,
+        );
+  }
+
   void goToCreateAddress(BuildContext context) {
     context.push(RoutesNames.createAddressRoute);
   }
@@ -90,5 +100,20 @@ class HomePageEvents extends StateNotifier<HomePageModel> {
       logger.error(e);
       rethrow;
     }
+  }
+
+  void searchAddress(String value) {
+    searchController.text = value;
+    if (value.isEmpty) {
+      state = state.copyWith(isSearching: false);
+      return;
+    }
+    state = state.copyWith(isSearching: true);
+  }
+
+  void clearSearch() {
+    searchController.clear();
+    FocusManager.instance.primaryFocus?.unfocus();
+    state = state.copyWith(isSearching: false);
   }
 }

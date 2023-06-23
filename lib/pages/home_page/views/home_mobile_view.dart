@@ -28,7 +28,8 @@ class HomeMobileView extends ConsumerWidget {
                     const SizedBox(height: 150),
                     Expanded(
                       child: StreamBuilder<List<AddressModel>>(
-                        stream: notifier.getUserAddressStream(),
+                        stream:
+                            state.isSearching ? notifier.searchUserAddressStream() : notifier.getUserAddressStream(),
                         builder: (BuildContext context, AsyncSnapshot<List<AddressModel>> snapshot) {
                           if (snapshot.hasError) {
                             return const Center(
@@ -80,13 +81,14 @@ class HomeMobileView extends ConsumerWidget {
                             );
                           }
 
-                          return ListView(
-                            children: snapshot.data!.map((AddressModel address) {
+                          return ListView(children: [
+                            ...snapshot.data!.map((AddressModel address) {
                               return AddressCard(
                                 address: address,
                               );
                             }).toList(),
-                          );
+                            const SizedBox(height: 60),
+                          ]);
                         },
                       ),
                     ),
@@ -140,11 +142,19 @@ class HomeMobileView extends ConsumerWidget {
                       ],
                     ),
                     CustomInput(
-                      onChange: (value) {},
+                      controller: TextEditingController.fromValue(
+                        TextEditingValue(
+                            text: notifier.searchController.text,
+                            selection: TextSelection(
+                              baseOffset: notifier.searchController.text.length,
+                              extentOffset: notifier.searchController.text.length,
+                            )),
+                      ),
+                      onChange: (value) => notifier.searchAddress(value),
                       validator: (value) {},
                       hint: 'Buscar...',
                       prefixIcon: Icons.search_outlined,
-                      onTapSuffixIcon: () {},
+                      onTapSuffixIcon: () => notifier.clearSearch(),
                       suffixIconShow: true,
                       sufixIcon: Icons.close,
                     ),

@@ -23,6 +23,27 @@ class AddressService {
     return streamAddress.map((qShot) => qShot.docs.map((doc) => AddressModel.fromJson(doc.data())).toList());
   }
 
+  Stream<List<AddressModel>> getSearchAddress({required String userId, required String searchText}) {
+    Stream<QuerySnapshot<Map<String, dynamic>>> streamAddress = ref
+        .read(databaseProvider)
+        .collection(
+            '${AppConstants.userCollection}/${ref.read(authServiceProvider).getCurrentUser()}/${AppConstants.addressCollection}')
+        .snapshots();
+    return streamAddress.map((qShot) {
+      final previewList = qShot.docs.map((doc) {
+        if (doc.data()['address'].toString().toLowerCase().contains(searchText.toLowerCase())) {
+          return AddressModel.fromJson(doc.data());
+        } else {
+          return null;
+        }
+      }).toList();
+
+      final finalList = previewList.where((element) => element != null).toList();
+
+      return finalList.cast<AddressModel>();
+    });
+  }
+
   Future<String> saveAddress({required AddressModel address}) async {
     try {
       final collection =

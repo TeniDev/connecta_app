@@ -18,6 +18,7 @@ class CustomInput extends StatelessWidget {
   final Function(String)? onChange;
   final String? initialValue;
   final Function? onTap;
+  final TextEditingController? controller;
 
   const CustomInput({
     super.key,
@@ -36,6 +37,7 @@ class CustomInput extends StatelessWidget {
     this.onChange,
     this.onTap,
     this.initialValue = '',
+    this.controller,
   });
 
   @override
@@ -45,7 +47,8 @@ class CustomInput extends StatelessWidget {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       child: TextFormField(
-        initialValue: initialValue,
+        controller: controller,
+        initialValue: controller != null ? null : initialValue,
         validator: (value) => validator(value),
         readOnly: readOnly,
         onTap: readOnly ? () => onTap!() : null,
