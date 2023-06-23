@@ -9,9 +9,9 @@ part of 'address_model.dart';
 _$_AddressModel _$$_AddressModelFromJson(Map<String, dynamic> json) =>
     _$_AddressModel(
       id: json['id'] as String,
-      identifierName: json['identifierName'] as String,
+      identifierName: json['identifierName'] as String?,
       address: json['address'] as String,
-      complement: json['complement'] as String,
+      complement: json['complement'] as String?,
       city: json['city'] as String,
     );
 

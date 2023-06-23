@@ -13,9 +13,17 @@ class DatabaseService implements DatabaseRepository {
   final Ref ref;
 
   @override
-  Future<String> deleteDocument({String? documentId, String? collection}) {
-    // TODO: implement deleteDocument
-    throw UnimplementedError();
+  Future<bool> deleteDocument({String? documentId, String? collection}) async {
+    try {
+      await ref.read(databaseProvider).collection(collection!).doc(documentId).delete();
+      return true;
+    } on FirebaseException catch (e) {
+      logger.error(e);
+      return false;
+    } catch (e) {
+      logger.error(e);
+      rethrow;
+    }
   }
 
   @override
@@ -47,8 +55,27 @@ class DatabaseService implements DatabaseRepository {
   }
 
   @override
-  Future<String> updateDocument({String? documentId, Map<String, dynamic>? data, String? collection}) {
-    // TODO: implement updateDocument
-    throw UnimplementedError();
+  Future<bool> updateDocument({String? documentId, Map<String, dynamic>? data, String? collection}) async {
+    try {
+      await ref.read(databaseProvider).collection(collection!).doc(documentId).update(data!);
+      return true;
+    } on FirebaseException catch (e) {
+      logger.error(e);
+      return false;
+    } catch (e) {
+      logger.error(e);
+      rethrow;
+    }
+  }
+
+  String? createId({required String? collection}) {
+    try {
+      final collRef = ref.read(databaseProvider).collection(collection!);
+      final docReference = collRef.doc();
+      return docReference.id;
+    } catch (e) {
+      logger.error(e);
+      rethrow;
+    }
   }
 }

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/utils.dart';
 import '../../../data/models/models.dart';
+import '../providers/home_providers.dart';
 
-class AddressCard extends StatelessWidget {
+class AddressCard extends ConsumerWidget {
   const AddressCard({Key? key, required this.address}) : super(key: key);
 
   final AddressModel address;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -48,19 +50,27 @@ class AddressCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  address.complement != null && address.complement!.isNotEmpty
+                      ? Column(
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              child: Text(
+                                address.complement!,
+                                style: AppStyles.small.copyWith(fontSize: 10),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        )
+                      : const SizedBox(height: 10),
                   SizedBox(
                     width: 150,
                     child: Text(
-                      address.complement,
-                      style: AppStyles.small.copyWith(fontSize: 10),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    width: 150,
-                    child: Text(
-                      '${address.city} - ${address.identifierName}',
+                      address.identifierName != null && address.identifierName!.isNotEmpty
+                          ? '${address.city} - ${address.identifierName}'
+                          : address.city,
                       style: AppStyles.small.copyWith(fontSize: 10),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -72,7 +82,10 @@ class AddressCard extends StatelessWidget {
           Column(
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () => ref.read(homePageProvider.notifier).goToEditAddress(
+                      context: context,
+                      address: address,
+                    ),
                 child: Container(
                   height: 35,
                   width: 35,
@@ -89,7 +102,43 @@ class AddressCard extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: const Text(
+                          'Eliminar dirección',
+                          style: AppStyles.large,
+                        ),
+                        content: const Text(
+                          '¿Estás seguro de eliminar esta dirección?',
+                          style: AppStyles.small,
+                        ),
+                        backgroundColor: AppColors.black,
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text(
+                              'Cancelar',
+                              style: AppStyles.small,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              ref.read(homePageProvider.notifier).deleteAddress(address.id);
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              'Eliminar',
+                              style: AppStyles.small.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
                 child: Container(
                   height: 35,
                   width: 35,

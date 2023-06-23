@@ -8,6 +8,7 @@ import '../../../../core/utils/utils.dart';
 import '../../../../data/models/models.dart';
 import '../../../../data/providers/providers.dart';
 import '../../../../services/services.dart';
+import '../../../edit_address_page/providers/edit_address_providers.dart';
 
 part 'home_page_provider.freezed.dart';
 part 'home_page_provider.g.dart';
@@ -70,5 +71,24 @@ class HomePageEvents extends StateNotifier<HomePageModel> {
 
   void goToCreateAddress(BuildContext context) {
     context.push(RoutesNames.createAddressRoute);
+  }
+
+  void goToEditAddress({required BuildContext context, required AddressModel address}) {
+    ref.read(addressToEditProvider.notifier).changeAddressToEdit(address);
+    context.push(RoutesNames.editAddressRoute, extra: address);
+  }
+
+  Future<void> deleteAddress(String addressId) async {
+    try {
+      final result = await ref.read(addressService).deleteAddress(addressId: addressId);
+      if (result) {
+        Toast.info('Dirección eliminada');
+      } else {
+        Toast.error('Error eliminando la dirección');
+      }
+    } catch (e) {
+      logger.error(e);
+      rethrow;
+    }
   }
 }

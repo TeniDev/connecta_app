@@ -21,9 +21,9 @@ AddressModel _$AddressModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AddressModel {
   String get id => throw _privateConstructorUsedError;
-  String get identifierName => throw _privateConstructorUsedError;
+  String? get identifierName => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
-  String get complement => throw _privateConstructorUsedError;
+  String? get complement => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,9 +40,9 @@ abstract class $AddressModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String identifierName,
+      String? identifierName,
       String address,
-      String complement,
+      String? complement,
       String city});
 }
 
@@ -60,9 +60,9 @@ class _$AddressModelCopyWithImpl<$Res, $Val extends AddressModel>
   @override
   $Res call({
     Object? id = null,
-    Object? identifierName = null,
+    Object? identifierName = freezed,
     Object? address = null,
-    Object? complement = null,
+    Object? complement = freezed,
     Object? city = null,
   }) {
     return _then(_value.copyWith(
@@ -70,18 +70,18 @@ class _$AddressModelCopyWithImpl<$Res, $Val extends AddressModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      identifierName: null == identifierName
+      identifierName: freezed == identifierName
           ? _value.identifierName
           : identifierName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      complement: null == complement
+      complement: freezed == complement
           ? _value.complement
           : complement // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       city: null == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -100,9 +100,9 @@ abstract class _$$_AddressModelCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String identifierName,
+      String? identifierName,
       String address,
-      String complement,
+      String? complement,
       String city});
 }
 
@@ -118,9 +118,9 @@ class __$$_AddressModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? identifierName = null,
+    Object? identifierName = freezed,
     Object? address = null,
-    Object? complement = null,
+    Object? complement = freezed,
     Object? city = null,
   }) {
     return _then(_$_AddressModel(
@@ -128,18 +128,18 @@ class __$$_AddressModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      identifierName: null == identifierName
+      identifierName: freezed == identifierName
           ? _value.identifierName
           : identifierName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      complement: null == complement
+      complement: freezed == complement
           ? _value.complement
           : complement // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       city: null == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -164,11 +164,11 @@ class _$_AddressModel implements _AddressModel {
   @override
   final String id;
   @override
-  final String identifierName;
+  final String? identifierName;
   @override
   final String address;
   @override
-  final String complement;
+  final String? complement;
   @override
   final String city;
 
@@ -213,9 +213,9 @@ class _$_AddressModel implements _AddressModel {
 abstract class _AddressModel implements AddressModel {
   const factory _AddressModel(
       {required final String id,
-      required final String identifierName,
+      required final String? identifierName,
       required final String address,
-      required final String complement,
+      required final String? complement,
       required final String city}) = _$_AddressModel;
 
   factory _AddressModel.fromJson(Map<String, dynamic> json) =
@@ -224,11 +224,11 @@ abstract class _AddressModel implements AddressModel {
   @override
   String get id;
   @override
-  String get identifierName;
+  String? get identifierName;
   @override
   String get address;
   @override
-  String get complement;
+  String? get complement;
   @override
   String get city;
   @override

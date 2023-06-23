@@ -8,12 +8,12 @@ abstract class DatabaseRepository {
     Map<String, dynamic>? data,
     String? collection,
   });
-  Future<String> updateDocument({
+  Future<bool> updateDocument({
     String? documentId,
     Map<String, dynamic>? data,
     String? collection,
   });
-  Future<String> deleteDocument({
+  Future<bool> deleteDocument({
     String? documentId,
     String? collection,
   });

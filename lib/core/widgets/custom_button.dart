@@ -33,18 +33,32 @@ class CustomButton extends StatelessWidget {
                 ),
               ),
             )
-          : ElevatedButton(
-              onPressed: () => onPressed(),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: bgColor,
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: isLarge ? 100 : 20),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              ),
-              child: Text(
-                label,
-                style: AppStyles.buttons,
-              ),
-            ),
+          : isLarge
+              ? ElevatedButton(
+                  onPressed: () => onPressed(),
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(250, 50),
+                    backgroundColor: bgColor,
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  child: Text(
+                    label,
+                    style: AppStyles.buttons,
+                  ),
+                )
+              : ElevatedButton(
+                  onPressed: () => onPressed(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: bgColor,
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  child: Text(
+                    label,
+                    style: AppStyles.buttons,
+                  ),
+                ),
     );
   }
 }

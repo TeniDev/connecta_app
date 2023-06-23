@@ -3,15 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/widgets.dart';
-import '../providers/create_address_providers.dart';
+import '../providers/edit_address_providers.dart';
 
-class CreateAddressMobileView extends ConsumerWidget {
-  const CreateAddressMobileView({super.key});
+class EditAddressMobileView extends ConsumerWidget {
+  const EditAddressMobileView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(createAddressPageProvider);
-    final notifier = ref.read(createAddressPageProvider.notifier);
+    final address = ref.watch(addressToEditProvider);
+    final model = ref.watch(editAddressPageProvider);
+    final notifier = ref.read(editAddressPageProvider.notifier);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -33,27 +34,30 @@ class CreateAddressMobileView extends ConsumerWidget {
             const SizedBox(height: 24),
             const Center(
               child: Text(
-                'Crear dirección',
+                'Editar dirección',
                 style: AppStyles.title,
               ),
             ),
             const SizedBox(height: 48),
             CustomInput(
-              onChange: (value) => notifier.addressController.text = value,
+              initialValue: address?.address ?? '',
+              onChange: (value) => ref.read(addressToEditProvider.notifier).changeAddress(value),
               validator: (value) => notifier.validateFields(value, context),
               hint: 'Dirección',
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 24),
             CustomInput(
-              onChange: (value) => notifier.complementController.text = value,
+              initialValue: address?.complement ?? '',
+              onChange: (value) => ref.read(addressToEditProvider.notifier).changeComplement(value),
               validator: (value) => null,
               hint: 'Complemento de dirección (opcional)',
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 24),
             CustomInput(
-              onChange: (value) => notifier.cityController.text = value,
+              initialValue: address?.city ?? '',
+              onChange: (value) => ref.read(addressToEditProvider.notifier).changeCity(value),
               validator: (value) => notifier.validateFields(value, context),
               hint: 'Ciudad',
               prefixIcon: Icons.home_outlined,
@@ -65,18 +69,32 @@ class CreateAddressMobileView extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             CustomInput(
-              onChange: (value) => notifier.identifierNameController.text = value,
+              initialValue: address?.identifierName ?? '',
+              onChange: (value) => ref.read(addressToEditProvider.notifier).changeIdentifierName(value),
               validator: (value) => null,
               hint: 'Nombre (opcional)',
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 48),
             Center(
-              child: CustomButton(
-                onPressed: () => notifier.createAddress(context),
-                label: 'Crear dirección',
-                isLarge: true,
-                isLoading: model.isLoadingForm,
+              child: SizedBox(
+                child: CustomButton(
+                  onPressed: () => notifier.editAddress(context),
+                  label: 'Editar dirección',
+                  isLarge: true,
+                  isLoading: model.isLoadingForm,
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Center(
+              child: SizedBox(
+                child: CustomButton(
+                  onPressed: () => notifier.pop(context),
+                  label: 'Cancelar',
+                  isLarge: true,
+                  bgColor: AppColors.red,
+                ),
               ),
             ),
           ],
