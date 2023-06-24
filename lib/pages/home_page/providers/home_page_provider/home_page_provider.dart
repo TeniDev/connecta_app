@@ -116,4 +116,8 @@ class HomePageEvents extends StateNotifier<HomePageModel> {
     FocusManager.instance.primaryFocus?.unfocus();
     state = state.copyWith(isSearching: false);
   }
+
+  void goToSettings(BuildContext context) {
+    context.push(RoutesNames.settingsRoute);
+  }
 }

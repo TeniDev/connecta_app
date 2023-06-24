@@ -5,5 +5,5 @@ class RoutesNames {
   static const String homeRoute = '/home';
   static const String createAddressRoute = '/create_address';
   static const String editAddressRoute = '/edit_address';
-  static const String profileRoute = '/profile';
+  static const String settingsRoute = '/settings';
 }

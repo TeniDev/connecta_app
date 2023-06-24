@@ -8,9 +8,6 @@ import '../../core/constants/constants.dart';
 import '../../services/services.dart';
 
 final localeProvider = NotifierProvider<_LocaleProvider, Locale>(() => _LocaleProvider());
-final translateProvider = Provider.family<AppLocalizationService, BuildContext>(
-  (ref, context) => AppLocalizationService.of(context),
-);
 
 class _LocaleProvider extends Notifier<Locale> {
   @override
@@ -20,16 +17,12 @@ class _LocaleProvider extends Notifier<Locale> {
     return Locale(defaultLocale.split('_')[0]);
   }
 
-  Locale? localeCallback(locale, supportedLocales) {
-    for (final supportedLocale in supportedLocales) {
-      if (supportedLocale.languageCode == locale!.languageCode) {
-        return supportedLocale;
-      }
-    }
-    return supportedLocales.first;
-  }
-
   changeLocale(Locale locale) {
     state = SupportLocale.support.contains(locale) ? locale : const Locale('es');
+  }
+
+  String translate(BuildContext context, {required String screen, required String key}) {
+    final localizationService = AppLocalizationService.of(context);
+    return localizationService.translate(screen, key) ?? '';
   }
 }

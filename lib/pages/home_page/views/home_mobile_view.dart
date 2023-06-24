@@ -124,7 +124,7 @@ class HomeMobileView extends ConsumerWidget {
                           ],
                         ),
                         InkWell(
-                          onTap: () => notifier.logout(context),
+                          onTap: () => notifier.goToSettings(context),
                           child: Container(
                             height: 35,
                             width: 35,

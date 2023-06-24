@@ -51,6 +51,10 @@ class _RouterConfig {
         path: RoutesNames.editAddressRoute,
         builder: _editAddressRouteHandler,
       ),
+      GoRoute(
+        path: RoutesNames.settingsRoute,
+        builder: _settingsHandler,
+      ),
     ],
   );
 }

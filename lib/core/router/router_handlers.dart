@@ -19,3 +19,7 @@ Widget _createAddressRouteHandler(BuildContext context, GoRouterState state) {
 Widget _editAddressRouteHandler(BuildContext context, GoRouterState state) {
   return const EditAddressPage();
 }
+
+Widget _settingsHandler(BuildContext context, GoRouterState state) {
+  return const SettingsPage();
+}
