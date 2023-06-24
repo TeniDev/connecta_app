@@ -17,7 +17,7 @@ _Para reproducir este proyecto en su maquina local es necesario instalar los ite
 * Clonar el repositorio:
 
     ```
-    git clone https://github.com/TeniDev/connecta.git
+    git clone https://github.com/TeniDev/connecta_app.git
     ```
 
   - _Recuerda tener a la mano las credenciales necesarias para AWS._
