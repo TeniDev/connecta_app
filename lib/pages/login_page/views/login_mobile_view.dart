@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/widgets.dart';
+import '../../../data/providers/providers.dart';
 import '../providers/login_providers.dart';
 
 class LoginMobileView extends ConsumerWidget {
@@ -15,6 +16,7 @@ class LoginMobileView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(loginPageProvider);
     final notifier = ref.read(loginPageProvider.notifier);
+    final translator = ref.read(localeProvider.notifier);
 
     return SingleChildScrollView(
       child: Form(
@@ -23,16 +25,43 @@ class LoginMobileView extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 150),
+            const SizedBox(height: 50),
+            Padding(
+              padding: const EdgeInsets.only(right: 30),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: () => notifier.goToSettings(context),
+                  child: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      color: AppColors.blue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(
+                      Icons.settings,
+                      size: 20,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 80),
             FadeInDown(
-              child: const Column(
+              child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Connecta',
                     style: AppStyles.title,
                   ),
                   Text(
-                    'Inicio de sesión',
+                    translator.translate(
+                      context,
+                      screen: 'login_page',
+                      key: 'login_title',
+                    ),
                     style: AppStyles.medium,
                   ),
                 ],
@@ -52,14 +81,22 @@ class LoginMobileView extends ConsumerWidget {
                     CustomInput(
                       onChange: (value) => notifier.userController.text = value,
                       validator: (value) => notifier.validateFields(value, context),
-                      hint: 'Correo electrónico',
+                      hint: translator.translate(
+                        context,
+                        screen: 'login_page',
+                        key: 'email_placeholder',
+                      ),
                       prefixIcon: Icons.email_outlined,
                     ),
                     const SizedBox(height: 24),
                     CustomInput(
                       onChange: (value) => notifier.passwordController.text = value,
                       validator: (value) => notifier.validateFields(value, context),
-                      hint: 'Contraseña',
+                      hint: translator.translate(
+                        context,
+                        screen: 'login_page',
+                        key: 'password_placeholder',
+                      ),
                       prefixIcon: Icons.lock_outline,
                       obscureText: model.isObscurePassword,
                       onTapSuffixIcon: notifier.changeObscureInput,
@@ -69,7 +106,11 @@ class LoginMobileView extends ConsumerWidget {
                     const SizedBox(height: 36),
                     CustomButton(
                       onPressed: () => notifier.login(context),
-                      label: 'Ingresar',
+                      label: translator.translate(
+                        context,
+                        screen: 'login_page',
+                        key: 'login_button',
+                      ),
                       isLoading: model.isLoadingForm,
                     ),
                   ],
@@ -84,15 +125,23 @@ class LoginMobileView extends ConsumerWidget {
                 onTap: () {
                   context.push(RoutesNames.registerRoute);
                 },
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '¿No tienes cuenta? ',
+                      translator.translate(
+                        context,
+                        screen: 'login_page',
+                        key: 'dont_have_account',
+                      ),
                       style: AppStyles.medium,
                     ),
                     Text(
-                      'Regístrate',
+                      translator.translate(
+                        context,
+                        screen: 'login_page',
+                        key: 'sign_up',
+                      ),
                       style: AppStyles.link,
                     )
                   ],

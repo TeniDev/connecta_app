@@ -12,12 +12,14 @@ final localeProvider = NotifierProvider<_LocaleProvider, Locale>(() => _LocalePr
 class _LocaleProvider extends Notifier<Locale> {
   @override
   Locale build() {
-    final sessionBox = Hive.box(LocalStorageConstants.sessionBox);
-    final String defaultLocale = sessionBox.get(LocalStorageConstants.localeKey) ?? kIsWeb ? 'es' : Platform.localeName;
+    final sessionBox = Hive.box(LocalStorageConstants.sessionBox).get(LocalStorageConstants.localeKey);
+    final String defaultLocale = sessionBox ?? (kIsWeb ? 'es' : Platform.localeName);
     return Locale(defaultLocale.split('_')[0]);
   }
 
-  changeLocale(Locale locale) {
+  changeLocale(Locale locale) async {
+    final sessionExpDate = Hive.box(LocalStorageConstants.sessionBox);
+    await sessionExpDate.put(LocalStorageConstants.localeKey, locale.languageCode);
     state = SupportLocale.support.contains(locale) ? locale : const Locale('es');
   }
 

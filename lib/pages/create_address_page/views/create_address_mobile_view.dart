@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/widgets.dart';
+import '../../../data/providers/providers.dart';
 import '../providers/create_address_providers.dart';
 
 class CreateAddressMobileView extends ConsumerWidget {
@@ -13,6 +14,7 @@ class CreateAddressMobileView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(createAddressPageProvider);
     final notifier = ref.read(createAddressPageProvider.notifier);
+    final translator = ref.read(localeProvider.notifier);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -37,9 +39,13 @@ class CreateAddressMobileView extends ConsumerWidget {
             const SizedBox(height: 24),
             FadeInDown(
               from: 30,
-              child: const Center(
+              child: Center(
                 child: Text(
-                  'Crear dirección',
+                  translator.translate(
+                    context,
+                    screen: 'create_address_page',
+                    key: 'create_address_title',
+                  ),
                   style: AppStyles.title,
                 ),
               ),
@@ -48,33 +54,53 @@ class CreateAddressMobileView extends ConsumerWidget {
             CustomInput(
               onChange: (value) => notifier.addressController.text = value,
               validator: (value) => notifier.validateFields(value, context),
-              hint: 'Dirección',
+              hint: translator.translate(
+                context,
+                screen: 'create_address_page',
+                key: 'address_placeholder',
+              ),
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 24),
             CustomInput(
               onChange: (value) => notifier.complementController.text = value,
               validator: (value) => null,
-              hint: 'Complemento de dirección (opcional)',
+              hint: translator.translate(
+                context,
+                screen: 'create_address_page',
+                key: 'complement_placeholder',
+              ),
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 24),
             CustomInput(
               onChange: (value) => notifier.cityController.text = value,
               validator: (value) => notifier.validateFields(value, context),
-              hint: 'Ciudad',
+              hint: translator.translate(
+                context,
+                screen: 'create_address_page',
+                key: 'city_placeholder',
+              ),
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 48),
-            const Text(
-              'Puedes colocar un nombre para tu dirección, por ejemplo: Casa, Oficina, etc.',
+            Text(
+              translator.translate(
+                context,
+                screen: 'create_address_page',
+                key: 'name_text',
+              ),
               style: AppStyles.small,
             ),
             const SizedBox(height: 24),
             CustomInput(
               onChange: (value) => notifier.identifierNameController.text = value,
               validator: (value) => null,
-              hint: 'Nombre (opcional)',
+              hint: translator.translate(
+                context,
+                screen: 'create_address_page',
+                key: 'identifier_name_placeholder',
+              ),
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 48),
@@ -83,7 +109,11 @@ class CreateAddressMobileView extends ConsumerWidget {
               child: Center(
                 child: CustomButton(
                   onPressed: () => notifier.createAddress(context),
-                  label: 'Crear dirección',
+                  label: translator.translate(
+                    context,
+                    screen: 'create_address_page',
+                    key: 'create_address_button',
+                  ),
                   isLarge: true,
                   isLoading: model.isLoadingForm,
                 ),

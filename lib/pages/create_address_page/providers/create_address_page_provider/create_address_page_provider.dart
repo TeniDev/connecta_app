@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/utils/utils.dart';
 import '../../../../data/models/models.dart';
+import '../../../../data/providers/providers.dart';
 import '../../../../services/services.dart';
 
 part 'create_address_page_provider.freezed.dart';
@@ -68,7 +69,13 @@ class CreateAddressPageEvents extends StateNotifier<CreateAddressPageModel> {
           );
       Future.delayed(const Duration(milliseconds: 500));
       if (result.isEmpty) {
-        Toast.info('Dirección creada correctamente');
+        if (context.mounted) {
+          Toast.info(ref.read(localeProvider.notifier).translate(
+                context,
+                screen: 'toast_messages',
+                key: 'address_created_successfully',
+              ));
+        }
         state = state.copyWith(isLoadingForm: false);
         if (context.mounted) pop(context);
       } else {

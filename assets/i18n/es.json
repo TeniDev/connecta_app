@@ -1,5 +1,69 @@
 {
+    "login_page": {
+        "login_title": "Inicio de sesión",
+        "login_button": "Ingresar",
+        "dont_have_account": "¿No tienes cuenta? ",
+        "sign_up": "Regístrate",
+        "email_placeholder": "Correo electrónico",
+        "password_placeholder": "Contraseña"
+    },
+    "signup_page": {
+        "signup_title": "Crea una cuenta",
+        "signup_button": "Registrarse",
+        "already_have_account": "¿Ya tienes cuenta? ",
+        "sign_in": "Inicia sesión",
+        "email_placeholder": "Correo electrónico",
+        "password_placeholder": "Contraseña",
+        "name_placeholder": "Nombre",
+        "last_name_placeholder": "Apellido",
+        "birthdate_placeholder": "Fecha de Nacimiento"
+    },
+    "home_page": {
+        "hi_user": "Hola, ",
+        "search_placeholder": "Buscar...",
+        "delete_address": "Eliminar dirección",
+        "confirm_delete_address": "¿Estás seguro de eliminar esta dirección?",
+        "delete_text": "Eliminar",
+        "cancel_text": "Cancelar",
+        "cant_load_your_information": "No se ha podido cargar tu información",
+        "try_again_later": "Vuélvelo a intentar más tarde",
+        "logout": "Cerrar sesión",
+        "loading_your_information": "Cargando tu información",
+        "cant_load_your_addresses": "No se ha podido cargar tus direcciones",
+        "dont_have_addresses": "No tienes direcciones registradas",
+        "add_new_address": "Agrega una nueva dirección"
+    },
+    "create_address_page": {
+        "create_address_title": "Crear dirección",
+        "create_address_button": "Crear dirección",
+        "address_placeholder": "Dirección",
+        "complement_placeholder": "Complemento de dirección (opcional)",
+        "city_placeholder": "Ciudad",
+        "name_text": "Puedes colocar un nombre para tu dirección, por ejemplo: Casa, Oficina, etc.",
+        "identifier_name_placeholder": "Nombre (opcional)"
+    },
+    "edit_address_page": {
+        "edit_address_title": "Editar dirección",
+        "edit_address_button": "Editar dirección",
+        "cancel_text": "Cancelar",
+        "address_placeholder": "Dirección",
+        "complement_placeholder": "Complemento de dirección (opcional)",
+        "city_placeholder": "Ciudad",
+        "name_text": "Puedes colocar un nombre para tu dirección, por ejemplo: Casa, Oficina, etc.",
+        "identifier_name_placeholder": "Nombre (opcional)"
+    },
     "settings_page": {
-        "settings_title": "Configuración"
+        "settings_title": "Configuración",
+        "language_title": "Idioma",
+        "logout": "Cerrar sesión"
+    },
+    "toast_messages": {
+        "welcome": "Bienvenido",
+        "address_created_successfully": "Dirección creada exitosamente",
+        "address_updated": "Dirección actualizada",
+        "error_updating_address": "Error al actualizar la dirección",
+        "address_deleted": "Dirección eliminada",
+        "error_deleting_address": "Error al eliminar la dirección",
+        "required_field": "Campo requerido"
     }
 }

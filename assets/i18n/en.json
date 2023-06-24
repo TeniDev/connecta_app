@@ -1,5 +1,69 @@
 {
+    "login_page": {
+        "login_title": "Sign in",
+        "login_button": "Login",
+        "dont_have_account": "Don't have an account? ",
+        "sign_up": "Sign up",
+        "email_placeholder": "Email",
+        "password_placeholder": "Password"
+    },
+    "signup_page": {
+        "signup_title": "Create an account",
+        "signup_button": "Sign up",
+        "already_have_account": "Already have an account? ",
+        "sign_in": "Sign in",
+        "email_placeholder": "Email",
+        "password_placeholder": "Password",
+        "name_placeholder": "Name",
+        "last_name_placeholder": "Last name",
+        "birthdate_placeholder": "Birth date"
+    },
+    "home_page": {
+        "hi_user": "Hi, ",
+        "search_placeholder": "Search...",
+        "delete_address": "Delete address",
+        "confirm_delete_address": "Are you sure you want to delete this address?",
+        "delete_text": "Delete",
+        "cancel_text": "Cancel",
+        "cant_load_your_information": "Can't load your information",
+        "try_again_later": "Try again later",
+        "logout": "Logout",
+        "loading_your_information": "Loading your information",
+        "cant_load_your_addresses": "Can't load your addresses",
+        "dont_have_addresses": "No addresses found",
+        "add_new_address": "Add new address"
+    },
+    "create_address_page": {
+        "create_address_title": "Create address",
+        "create_address_button": "Create address",
+        "address_placeholder": "Address",
+        "complement_placeholder": "Address complement (optional)",
+        "city_placeholder": "City",
+        "name_text": "You can enter a name for your address, for example: Home, Office, etc.",
+        "identifier_name_placeholder": "Name (optional)"
+    },
+    "edit_address_page": {
+        "edit_address_title": "Edit address",
+        "edit_address_button": "Edit address",
+        "cancel_text": "Cancel",
+        "address_placeholder": "Address",
+        "complement_placeholder": "Address complement (optional)",
+        "city_placeholder": "City",
+        "name_text": "You can enter a name for your address, for example: Home, Office, etc.",
+        "identifier_name_placeholder": "Name (optional)"
+    },
     "settings_page": {
-        "settings_title": "Settings"
+        "settings_title": "Settings",
+        "language_title": "Language",
+        "logout": "Logout"
+    },
+    "toast_messages": {
+        "welcome": "Welcome",
+        "address_created_successfully": "Address created successfully",
+        "address_updated": "Address updated",
+        "error_updating_address": "Error updating address",
+        "address_deleted": "Address deleted",
+        "error_deleting_address": "Error deleting address",
+        "required_field": "Require field"
     }
 }

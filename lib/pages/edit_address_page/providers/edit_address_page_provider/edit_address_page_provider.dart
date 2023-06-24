@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/utils/utils.dart';
+import '../../../../data/providers/providers.dart';
 import '../../../../services/services.dart';
 import '../edit_address_providers.dart';
 
@@ -48,11 +49,23 @@ class EditAddressPageEvents extends StateNotifier<EditAddressPageModel> {
       state = state.copyWith(isLoadingForm: true);
       final result = await ref.read(addressService).editAddress(address: ref.read(addressToEditProvider)!);
       if (result) {
-        Toast.info('Dirección editada');
+        if (context.mounted) {
+          Toast.info(ref.read(localeProvider.notifier).translate(
+                context,
+                screen: 'toast_messages',
+                key: 'address_updated',
+              ));
+        }
         state = state.copyWith(isLoadingForm: false);
         if (context.mounted) pop(context);
       } else {
-        Toast.error('Error editando la dirección');
+        if (context.mounted) {
+          Toast.error(ref.read(localeProvider.notifier).translate(
+                context,
+                screen: 'toast_messages',
+                key: 'error_updating_address',
+              ));
+        }
       }
     } catch (e) {
       logger.error(e);

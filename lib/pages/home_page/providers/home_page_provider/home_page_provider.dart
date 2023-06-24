@@ -88,13 +88,25 @@ class HomePageEvents extends StateNotifier<HomePageModel> {
     context.push(RoutesNames.editAddressRoute, extra: address);
   }
 
-  Future<void> deleteAddress(String addressId) async {
+  Future<void> deleteAddress(BuildContext context, {required String addressId}) async {
     try {
       final result = await ref.read(addressService).deleteAddress(addressId: addressId);
       if (result) {
-        Toast.info('Dirección eliminada');
+        if (context.mounted) {
+          Toast.info(ref.read(localeProvider.notifier).translate(
+                context,
+                screen: 'toast_messages',
+                key: 'address_deleted',
+              ));
+        }
       } else {
-        Toast.error('Error eliminando la dirección');
+        if (context.mounted) {
+          Toast.error(ref.read(localeProvider.notifier).translate(
+                context,
+                screen: 'toast_messages',
+                key: 'error_deleting_address',
+              ));
+        }
       }
     } catch (e) {
       logger.error(e);

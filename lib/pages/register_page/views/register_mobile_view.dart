@@ -16,6 +16,7 @@ class RegisterMobileView extends ConsumerWidget {
     final model = ref.watch(registerPageProvider);
     final notifier = ref.read(registerPageProvider.notifier);
     final locale = ref.watch(localeProvider);
+    final translator = ref.read(localeProvider.notifier);
 
     return SingleChildScrollView(
       child: Form(
@@ -26,14 +27,18 @@ class RegisterMobileView extends ConsumerWidget {
           children: [
             const SizedBox(height: 50),
             FadeInLeft(
-              child: const Column(
+              child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Connecta',
                     style: AppStyles.title,
                   ),
                   Text(
-                    'Crea una cuenta',
+                    translator.translate(
+                      context,
+                      screen: 'signup_page',
+                      key: 'signup_title',
+                    ),
                     style: AppStyles.medium,
                   ),
                 ],
@@ -53,21 +58,33 @@ class RegisterMobileView extends ConsumerWidget {
                     CustomInput(
                       onChange: (value) => notifier.nameController.text = value,
                       validator: (value) => notifier.validateFields(value, context),
-                      hint: 'Nombre',
+                      hint: translator.translate(
+                        context,
+                        screen: 'signup_page',
+                        key: 'name_placeholder',
+                      ),
                       prefixIcon: Icons.person_outline,
                     ),
                     const SizedBox(height: 24),
                     CustomInput(
                       onChange: (value) => notifier.lastNameController.text = value,
                       validator: (value) => notifier.validateFields(value, context),
-                      hint: 'Apellido',
+                      hint: translator.translate(
+                        context,
+                        screen: 'signup_page',
+                        key: 'last_name_placeholder',
+                      ),
                       prefixIcon: Icons.person_outline,
                     ),
                     const SizedBox(height: 24),
                     CustomInput(
                       onChange: (value) => notifier.emailController.text = value,
                       validator: (value) => notifier.validateFields(value, context),
-                      hint: 'Correo electrónico',
+                      hint: translator.translate(
+                        context,
+                        screen: 'signup_page',
+                        key: 'email_placeholder',
+                      ),
                       prefixIcon: Icons.email_outlined,
                     ),
                     const SizedBox(height: 24),
@@ -90,14 +107,22 @@ class RegisterMobileView extends ConsumerWidget {
                       validator: (_) => null,
                       hint: model.birthday != null
                           ? DateFormat('dd/MM/yyyy').format(model.birthday!)
-                          : 'Fecha de Nacimiento',
+                          : translator.translate(
+                              context,
+                              screen: 'signup_page',
+                              key: 'birthdate_placeholder',
+                            ),
                       prefixIcon: Icons.calendar_month_outlined,
                     ),
                     const SizedBox(height: 24),
                     CustomInput(
                       onChange: (value) => notifier.passwordController.text = value,
                       validator: (value) => notifier.validateFields(value, context),
-                      hint: 'Contraseña',
+                      hint: translator.translate(
+                        context,
+                        screen: 'signup_page',
+                        key: 'password_placeholder',
+                      ),
                       prefixIcon: Icons.lock_outline,
                       obscureText: model.isObscurePassword,
                       onTapSuffixIcon: notifier.changeObscureInput,
@@ -107,7 +132,11 @@ class RegisterMobileView extends ConsumerWidget {
                     const SizedBox(height: 36),
                     CustomButton(
                       onPressed: () => notifier.signup(context),
-                      label: 'Registrarse',
+                      label: translator.translate(
+                        context,
+                        screen: 'signup_page',
+                        key: 'signup_button',
+                      ),
                       isLoading: model.isLoadingForm,
                     ),
                   ],
@@ -120,15 +149,23 @@ class RegisterMobileView extends ConsumerWidget {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () => notifier.pop(context),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '¿Ya tienes cuenta? ',
+                      translator.translate(
+                        context,
+                        screen: 'signup_page',
+                        key: 'already_have_account',
+                      ),
                       style: AppStyles.medium,
                     ),
                     Text(
-                      'Inicia sesión',
+                      translator.translate(
+                        context,
+                        screen: 'signup_page',
+                        key: 'sign_in',
+                      ),
                       style: AppStyles.link,
                     )
                   ],

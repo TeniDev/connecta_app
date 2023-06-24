@@ -13,9 +13,10 @@ class SettingsMobileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userSessionProvider);
     final notifier = ref.read(settingsPageProvider.notifier);
     final locale = ref.watch(localeProvider);
-    final translator = ref.watch(localeProvider.notifier);
+    final translator = ref.read(localeProvider.notifier);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -63,8 +64,12 @@ class SettingsMobileView extends ConsumerWidget {
             children: [
               FadeInLeft(
                 from: 30,
-                child: const Text(
-                  'Idioma',
+                child: Text(
+                  translator.translate(
+                    context,
+                    screen: 'settings_page',
+                    key: 'language_title',
+                  ),
                   style: AppStyles.medium,
                 ),
               ),
@@ -105,19 +110,25 @@ class SettingsMobileView extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 48),
-          FadeInUp(
-            from: 30,
-            child: Center(
-              child: SizedBox(
-                child: CustomButton(
-                  onPressed: () => notifier.logout(context),
-                  label: 'Cerrar sesión',
-                  isLarge: true,
-                  bgColor: AppColors.blue,
-                ),
-              ),
-            ),
-          ),
+          user != null
+              ? FadeInUp(
+                  from: 30,
+                  child: Center(
+                    child: SizedBox(
+                      child: CustomButton(
+                        onPressed: () => notifier.logout(context),
+                        label: translator.translate(
+                          context,
+                          screen: 'settings_page',
+                          key: 'logout',
+                        ),
+                        isLarge: true,
+                        bgColor: AppColors.blue,
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );

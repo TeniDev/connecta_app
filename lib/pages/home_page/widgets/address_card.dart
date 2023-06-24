@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/utils.dart';
 import '../../../data/models/models.dart';
+import '../../../data/providers/providers.dart';
 import '../providers/home_providers.dart';
 
 class AddressCard extends ConsumerWidget {
@@ -12,6 +13,8 @@ class AddressCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final translator = ref.read(localeProvider.notifier);
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -95,30 +98,49 @@ class AddressCard extends ConsumerWidget {
                     context: context,
                     builder: (_) {
                       return AlertDialog(
-                        title: const Text(
-                          'Eliminar dirección',
+                        title: Text(
+                          translator.translate(
+                            context,
+                            screen: 'home_page',
+                            key: 'delete_address',
+                          ),
                           style: AppStyles.large,
                         ),
-                        content: const Text(
-                          '¿Estás seguro de eliminar esta dirección?',
+                        content: Text(
+                          translator.translate(
+                            context,
+                            screen: 'home_page',
+                            key: 'confirm_delete_address',
+                          ),
                           style: AppStyles.small,
                         ),
                         backgroundColor: AppColors.black,
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: const Text(
-                              'Cancelar',
+                            child: Text(
+                              translator.translate(
+                                context,
+                                screen: 'home_page',
+                                key: 'cancel_text',
+                              ),
                               style: AppStyles.small,
                             ),
                           ),
                           TextButton(
                             onPressed: () {
-                              ref.read(homePageProvider.notifier).deleteAddress(address.id);
+                              ref.read(homePageProvider.notifier).deleteAddress(
+                                    context,
+                                    addressId: address.id,
+                                  );
                               Navigator.pop(context);
                             },
                             child: Text(
-                              'Eliminar',
+                              translator.translate(
+                                context,
+                                screen: 'home_page',
+                                key: 'delete_text',
+                              ),
                               style: AppStyles.small.copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/utils/utils.dart';
+import '../../../../data/providers/providers.dart';
 import '../../../../services/services.dart';
 
 part 'register_page_provider.freezed.dart';
@@ -50,7 +51,11 @@ class RegisterPageEvents extends StateNotifier<RegisterPageModel> {
 
   String? validateFields(String? value, BuildContext context) {
     if (value == null || value == '') {
-      return 'Campo requerido';
+      return ref.read(localeProvider.notifier).translate(
+            context,
+            screen: 'toast_messages',
+            key: 'require_field',
+          );
     }
     return null;
   }
@@ -76,7 +81,13 @@ class RegisterPageEvents extends StateNotifier<RegisterPageModel> {
               collection: AppConstants.userCollection,
             );
         if (resultData.isEmpty) {
-          Toast.info('Bienvenido');
+          if (context.mounted) {
+            Toast.info(ref.read(localeProvider.notifier).translate(
+                  context,
+                  screen: 'toast_messages',
+                  key: 'welcome',
+                ));
+          }
           state = state.copyWith(isLoadingForm: false);
           if (context.mounted) context.go(RoutesNames.homeRoute);
           _cleanControllers();

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/widgets.dart';
+import '../../../data/providers/providers.dart';
 import '../providers/edit_address_providers.dart';
 
 class EditAddressMobileView extends ConsumerWidget {
@@ -14,6 +15,7 @@ class EditAddressMobileView extends ConsumerWidget {
     final address = ref.watch(addressToEditProvider);
     final model = ref.watch(editAddressPageProvider);
     final notifier = ref.read(editAddressPageProvider.notifier);
+    final translator = ref.read(localeProvider.notifier);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -38,9 +40,13 @@ class EditAddressMobileView extends ConsumerWidget {
             const SizedBox(height: 24),
             FadeInDown(
               from: 30,
-              child: const Center(
+              child: Center(
                 child: Text(
-                  'Editar dirección',
+                  translator.translate(
+                    context,
+                    screen: 'edit_address_page',
+                    key: 'edit_address_title',
+                  ),
                   style: AppStyles.title,
                 ),
               ),
@@ -50,7 +56,11 @@ class EditAddressMobileView extends ConsumerWidget {
               initialValue: address?.address ?? '',
               onChange: (value) => ref.read(addressToEditProvider.notifier).changeAddress(value),
               validator: (value) => notifier.validateFields(value, context),
-              hint: 'Dirección',
+              hint: translator.translate(
+                context,
+                screen: 'edit_address_page',
+                key: 'address_placeholder',
+              ),
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 24),
@@ -58,7 +68,11 @@ class EditAddressMobileView extends ConsumerWidget {
               initialValue: address?.complement ?? '',
               onChange: (value) => ref.read(addressToEditProvider.notifier).changeComplement(value),
               validator: (value) => null,
-              hint: 'Complemento de dirección (opcional)',
+              hint: translator.translate(
+                context,
+                screen: 'edit_address_page',
+                key: 'complement_placeholder',
+              ),
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 24),
@@ -66,12 +80,20 @@ class EditAddressMobileView extends ConsumerWidget {
               initialValue: address?.city ?? '',
               onChange: (value) => ref.read(addressToEditProvider.notifier).changeCity(value),
               validator: (value) => notifier.validateFields(value, context),
-              hint: 'Ciudad',
+              hint: translator.translate(
+                context,
+                screen: 'edit_address_page',
+                key: 'city_placeholder',
+              ),
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 48),
-            const Text(
-              'Puedes colocar un nombre para tu dirección, por ejemplo: Casa, Oficina, etc.',
+            Text(
+              translator.translate(
+                context,
+                screen: 'edit_address_page',
+                key: 'name_text',
+              ),
               style: AppStyles.small,
             ),
             const SizedBox(height: 24),
@@ -79,7 +101,11 @@ class EditAddressMobileView extends ConsumerWidget {
               initialValue: address?.identifierName ?? '',
               onChange: (value) => ref.read(addressToEditProvider.notifier).changeIdentifierName(value),
               validator: (value) => null,
-              hint: 'Nombre (opcional)',
+              hint: translator.translate(
+                context,
+                screen: 'edit_address_page',
+                key: 'identifier_name_placeholder',
+              ),
               prefixIcon: Icons.home_outlined,
             ),
             const SizedBox(height: 48),
@@ -89,7 +115,11 @@ class EditAddressMobileView extends ConsumerWidget {
                 child: SizedBox(
                   child: CustomButton(
                     onPressed: () => notifier.editAddress(context),
-                    label: 'Editar dirección',
+                    label: translator.translate(
+                      context,
+                      screen: 'edit_address_page',
+                      key: 'edit_address_button',
+                    ),
                     isLarge: true,
                     isLoading: model.isLoadingForm,
                   ),
@@ -103,7 +133,11 @@ class EditAddressMobileView extends ConsumerWidget {
                 child: SizedBox(
                   child: CustomButton(
                     onPressed: () => notifier.pop(context),
-                    label: 'Cancelar',
+                    label: translator.translate(
+                      context,
+                      screen: 'edit_address_page',
+                      key: 'cancel_text',
+                    ),
                     isLarge: true,
                     bgColor: AppColors.red,
                   ),

@@ -16,6 +16,7 @@ class HomeMobileView extends ConsumerWidget {
     final user = ref.watch(userSessionProvider);
     final state = ref.watch(homePageProvider);
     final notifier = ref.read(homePageProvider.notifier);
+    final translator = ref.read(localeProvider.notifier);
 
     return user != null
         ? Stack(
@@ -32,16 +33,24 @@ class HomeMobileView extends ConsumerWidget {
                             state.isSearching ? notifier.searchUserAddressStream() : notifier.getUserAddressStream(),
                         builder: (BuildContext context, AsyncSnapshot<List<AddressModel>> snapshot) {
                           if (snapshot.hasError) {
-                            return const Center(
+                            return Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'No se ha podido cargar tus direcciones',
+                                    translator.translate(
+                                      context,
+                                      screen: 'home_page',
+                                      key: 'cant_load_your_addresses',
+                                    ),
                                     style: AppStyles.medium,
                                   ),
                                   Text(
-                                    'Vuélvelo a intentar más tarde',
+                                    translator.translate(
+                                      context,
+                                      screen: 'home_page',
+                                      key: 'try_again_later',
+                                    ),
                                     style: AppStyles.small,
                                   ),
                                 ],
@@ -64,16 +73,24 @@ class HomeMobileView extends ConsumerWidget {
                           }
 
                           if (snapshot.data!.isEmpty) {
-                            return const Center(
+                            return Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'No tienes direcciones registradas',
+                                    translator.translate(
+                                      context,
+                                      screen: 'home_page',
+                                      key: 'dont_have_addresses',
+                                    ),
                                     style: AppStyles.medium,
                                   ),
                                   Text(
-                                    'Agrega una nueva dirección',
+                                    translator.translate(
+                                      context,
+                                      screen: 'home_page',
+                                      key: 'add_new_address',
+                                    ),
                                     style: AppStyles.small,
                                   ),
                                 ],
@@ -114,7 +131,11 @@ class HomeMobileView extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hola, ${user.name}',
+                              '${translator.translate(
+                                context,
+                                screen: 'home_page',
+                                key: 'hi_user',
+                              )}${user.name}',
                               style: AppStyles.medium,
                             ),
                             Text(
@@ -152,7 +173,11 @@ class HomeMobileView extends ConsumerWidget {
                       ),
                       onChange: (value) => notifier.searchAddress(value),
                       validator: (value) {},
-                      hint: 'Buscar...',
+                      hint: translator.translate(
+                        context,
+                        screen: 'home_page',
+                        key: 'search_placeholder',
+                      ),
                       prefixIcon: Icons.search_outlined,
                       onTapSuffixIcon: () => notifier.clearSearch(),
                       suffixIconShow: notifier.searchController.text.isNotEmpty,
@@ -180,12 +205,20 @@ class HomeMobileView extends ConsumerWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              'No se ha podido cargar tu información',
+                            Text(
+                              translator.translate(
+                                context,
+                                screen: 'home_page',
+                                key: 'cant_load_your_information',
+                              ),
                               style: AppStyles.medium,
                             ),
-                            const Text(
-                              'Vuélvelo a intentar más tarde',
+                            Text(
+                              translator.translate(
+                                context,
+                                screen: 'home_page',
+                                key: 'try_again_later',
+                              ),
                               style: AppStyles.small,
                             ),
                             const SizedBox(
@@ -193,7 +226,11 @@ class HomeMobileView extends ConsumerWidget {
                             ),
                             CustomButton(
                               onPressed: () => notifier.logout(context),
-                              label: 'Cerrar sesión',
+                              label: translator.translate(
+                                context,
+                                screen: 'home_page',
+                                key: 'logout',
+                              ),
                               isLoading: state.isLoadingSignOut,
                             ),
                           ],
@@ -201,19 +238,23 @@ class HomeMobileView extends ConsumerWidget {
                       );
                     }
                   }
-                  return const Center(
+                  return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircularProgressIndicator(
+                        const CircularProgressIndicator(
                           color: AppColors.white,
                           strokeWidth: 2,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 24,
                         ),
                         Text(
-                          'Cargando tu información',
+                          translator.translate(
+                            context,
+                            screen: 'home_page',
+                            key: 'loading_your_information',
+                          ),
                           style: AppStyles.medium,
                         ),
                       ],
